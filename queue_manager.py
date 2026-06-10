@@ -12,5 +12,5 @@ class QueueManager:
             return self.songs[self.index]
         return None
     
-    def next(self):
+    def advance(self):
         self.index += 1

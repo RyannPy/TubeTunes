@@ -1,31 +1,38 @@
 from playlist import get_playlist
-from player import get_audio_stream, play_audio
+from queue_manager import QueueManager
+from player import get_audio_stream
+from player import play_audio
 
-playlist_url = input("Enter the Playlist URL: ")
+playlist_url = input("Playlist URL: ")
 
 playlist = get_playlist(playlist_url)
-total = len(playlist["entries"])
 
+queue = QueueManager(
+    playlist["entries"]
+)
 
-for i, video in enumerate(playlist["entries"], start=1):
+while queue.has_next():
+
+    video = queue.current()
 
     try:
+
         title = video["title"]
 
-        print(
-            f"\n[{i}/{total}] {title}"
-        )
-
         video_url = (
-            f"https://www.youtube.com/watch?v={video['id']}"
+            f"https://youtube.com/watch?v={video['id']}"
         )
 
-        print(f"\n▶ Now Playing: {title}")
+        print(f"▶ {title}")
 
-        audio_url = get_audio_stream(video_url)
+        audio_url = get_audio_stream(
+            video_url
+        )
 
         play_audio(audio_url)
 
     except Exception as e:
-        print(f"Skipped: {title}")
+
         print(e)
+
+    queue.advance()
