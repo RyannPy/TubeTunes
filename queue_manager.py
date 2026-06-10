@@ -1,16 +1,26 @@
+import random
+
+
 class QueueManager:
 
-    def __init__(self, songs):
-        self.songs = songs
+    def __init__(
+        self,
+        songs,
+        shuffle=False
+    ):
+
+        self.songs = songs.copy()
+
+        if shuffle:
+            random.shuffle(self.songs)
+
         self.index = 0
 
     def has_next(self):
         return self.index < len(self.songs)
-    
+
     def current(self):
-        if 0 <= self.index < len(self.songs):
-            return self.songs[self.index]
-        return None
-    
+        return self.songs[self.index]
+
     def advance(self):
         self.index += 1

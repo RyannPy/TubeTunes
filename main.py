@@ -3,14 +3,20 @@ from queue_manager import QueueManager
 from player import get_audio_stream
 from player import play_audio
 
-playlist_url = input("Playlist URL: ")
+from cli import parse_args
 
+# parse input
+args = parse_args()
+# get url dan playlist
+playlist_url = args.playlist_url
 playlist = get_playlist(playlist_url)
 
+# manage queue
 queue = QueueManager(
-    playlist["entries"]
+    playlist["entries"],
+    shuffle=args.shuffle
 )
-
+# play songs
 while queue.has_next():
 
     video = queue.current()
