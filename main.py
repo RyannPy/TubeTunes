@@ -1,7 +1,6 @@
 from playlist import get_playlist
 from queue_manager import QueueManager
-from player import get_audio_stream
-from player import play_audio
+from player import Player
 
 from cli import parse_args
 
@@ -15,27 +14,31 @@ playlist = get_playlist(playlist_url)
 queue = QueueManager(
     playlist["entries"],
     shuffle=args.shuffle
+
 )
+
+player = Player()
+
 # play songs
 while queue.has_next():
 
-    video = queue.current()
-
     try:
 
-        title = video["title"]
+        # TITLE
+        print(f"▶ {queue.current_title()}")
 
-        video_url = (
-            f"https://youtube.com/watch?v={video['id']}"
-        )
+        # COMING UP
+        print("\nNext Up:")
+        for i, song in enumerate(
+            queue.upcoming(),
+            start=1
+        ):
+            print(
+                f"{i}. {song['title']}"
+            )
 
-        print(f"▶ {title}")
-
-        audio_url = get_audio_stream(
-            video_url
-        )
-
-        play_audio(audio_url)
+        # PLAY
+        player.play(queue.current_url())
 
     except Exception as e:
 

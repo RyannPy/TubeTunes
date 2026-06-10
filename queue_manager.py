@@ -24,3 +24,24 @@ class QueueManager:
 
     def advance(self):
         self.index += 1
+
+    def current_url(self):
+
+        current = self.current()
+
+        return (
+            f"https://youtube.com/watch?v="
+            f"{current['id']}"
+        )
+    
+    def current_title(self):
+        current = self.current()
+
+        return current["title"]
+    
+    def upcoming(self, limit=3):
+
+        return self.songs[
+            self.index + 1 :
+            self.index + 1 + limit
+        ]

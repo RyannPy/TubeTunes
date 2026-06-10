@@ -1,20 +1,30 @@
-import subprocess
 from yt_dlp import YoutubeDL
+import subprocess
 
 
-def get_audio_stream(video_url):
-    ydl_opts = {
-        "format": "bestaudio",
-        "quiet": True
-    }
+class Player:
 
-    with YoutubeDL(ydl_opts) as ydl:
-        info = ydl.extract_info(video_url, download=False)
+    def get_audio_stream(self, video_url):
 
-    return info["url"]
+        ydl_opts = {
+            "format": "bestaudio",
+            "quiet": True
+        }
 
+        with YoutubeDL(ydl_opts) as ydl:
+            info = ydl.extract_info(
+                video_url,
+                download=False
+            )
 
-def play_audio(audio_url):
-    subprocess.run(
-        ["mpv", audio_url]
-    )
+        return info["url"]
+
+    def play(self, video_url):
+
+        audio_url = self.get_audio_stream(
+            video_url
+        )
+
+        subprocess.run(
+            ["mpv", audio_url]
+        )
