@@ -1,88 +1,31 @@
-from queue_manager import QueueManager
-from player import Player
-from rich.console import Console
-from cli import parse_args
-from playlist import get_playlist
-from storage_playlist import (
-    save_playlist,
-    get_playlist_url,
-)
-
-console = Console()
-
-# parse input
-args = parse_args()
-
-if args.command == "save":
-
-    save_playlist(
-        args.alias,
-        args.playlist_url
-    )
-
-    console.print(
-        f"[green]Saved:[/green] {args.alias}"
-    )
-
-    exit()
+from src.cli.cli import parse_args
+from src.cli.menu import handle_menu
+from src.services.playlist_service import resolve_playlist_url, save_alias
+from src.services.playback_service import play_playlist
+from src.utils.console import console
 
 
-# get url dan playlist
-if args.playlist_url.startswith("http"):
+def main():
+    args = parse_args()
 
-    playlist_url = args.playlist_url
+    if args.command == "save":
+        save_alias(args.alias, args.playlist_url)
+        console.print(f"[green]Saved:[/green] {args.alias}")
+        return
 
-else:
+    if args.command is None:
+        handle_menu()
+        return
 
-    playlist_url = get_playlist_url(
-        args.playlist_url
-    )
+    # "play" command
+    playlist_url = resolve_playlist_url(args.playlist_url)
+
+    if playlist_url is None:
+        console.print("[red]Playlist alias not found[/red]")
+        return
+
+    play_playlist(playlist_url, shuffle=args.shuffle)
 
 
-if playlist_url is None:
-
-    console.print(
-        "[red]Playlist alias not found[/red]"
-    )
-
-    exit()
-
-# ambil lagu yt
-playlist = get_playlist(
-    playlist_url
-)
-
-# manage queue
-queue = QueueManager(
-    playlist["entries"],
-    shuffle=args.shuffle
-
-)
-
-player = Player()
-
-# play songs
-while queue.has_next():
-
-    try:
-        console.rule("TubeTunes")
-
-        # TITLE
-        console.print(f"[green]▶ {queue.current_title()}[/green]")
-
-        # COMING UP
-        console.print("[cyan]\nNext Up:[/cyan]")
-        for i, song in enumerate(
-            queue.upcoming(),
-            start=1
-        ):
-            console.print(f"[cyan]{i}. {song['title']}[/cyan]")
-
-        # PLAY
-        player.play(queue.current_url())
-
-    except Exception as e:
-
-        console.print(f"Error: {e}")
-
-    queue.advance()
+if __name__ == "__main__":
+    main()
