@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tubetunes"
+version = "0.1.0"
+description = "CLI YouTube Playlist Audio Player"
+authors = [
+    {name = "Ryan"}
+]
+readme = "README.md"
+requires-python = ">=3.10"
+
+dependencies = [
+    "yt-dlp",
+    "rich",
+    "questionary"
+]
+
+
+[project.scripts]
+tubetunes = "src.app:main"
+
+[tool.setuptools.packages.find]
+include = ["src*"]
