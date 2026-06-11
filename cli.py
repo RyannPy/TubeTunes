@@ -19,8 +19,20 @@ def parse_args():
     )
     
     play_parser.add_argument(
-    "--shuffle",
-    action="store_true"
-)
+        "--shuffle",
+        action="store_true"
+    )
+
+    save_parser = subparsers.add_parser(
+        "save"
+    )
+
+    save_parser.add_argument(
+        "alias"
+    )
+
+    save_parser.add_argument(
+        "playlist_url"
+    )
 
     return parser.parse_args()
