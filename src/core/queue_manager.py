@@ -11,6 +11,10 @@ class QueueManager:
 
         self.index = 0
 
+    # ------------------------------------------------------------------
+    # Forward navigation
+    # ------------------------------------------------------------------
+
     def has_next(self) -> bool:
         return self.index < len(self.songs)
 
@@ -19,6 +23,27 @@ class QueueManager:
 
     def advance(self) -> None:
         self.index += 1
+
+    # ------------------------------------------------------------------
+    # Backward navigation  (V3.0 addition)
+    # ------------------------------------------------------------------
+
+    def has_previous(self) -> bool:
+        """Return True if there is a song before the current index."""
+        return self.index > 0
+
+    def back(self) -> None:
+        """Move the index one step backward.
+
+        Callers should check has_previous() first.
+        Does nothing (clamps at 0) if already at the first song.
+        """
+        if self.index > 0:
+            self.index -= 1
+
+    # ------------------------------------------------------------------
+    # Helpers
+    # ------------------------------------------------------------------
 
     def current_url(self) -> str:
         current = self.current()
