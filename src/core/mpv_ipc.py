@@ -136,7 +136,10 @@ class MpvIPC:
         self._send({"command": ["get_property", name], "request_id": request_id})
 
         deadline = time.monotonic() + timeout
-        while time.monotonic() < deadline:
+        event_skip_count = 0
+        max_event_skips = 50  # Prevent infinite event flood
+
+        while time.monotonic() < deadline and event_skip_count < max_event_skips:
             resp = self._read_response(timeout=0.1)
             if resp is None:
                 continue
@@ -145,6 +148,8 @@ class MpvIPC:
                 if resp.get("error") == "success":
                     return resp.get("data")
                 return None
+            # Unsolicited event - count it to prevent infinite loops
+            event_skip_count += 1
 
         return None
 

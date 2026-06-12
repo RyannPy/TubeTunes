@@ -1,8 +1,7 @@
-# venv
-venv*
-
-# env
-env*
-
-# pycache
-__pycache__/**/*
+.venv/
+__pycache__/
+*.pyc
+data/playlists.json
+dist/
+build/
+*.egg-info/

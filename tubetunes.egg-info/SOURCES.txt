@@ -5,6 +5,7 @@ src/cli/__init__.py
 src/cli/cli.py
 src/cli/menu.py
 src/core/__init__.py
+src/core/mpv_ipc.py
 src/core/player.py
 src/core/playlist_loader.py
 src/core/queue_manager.py
