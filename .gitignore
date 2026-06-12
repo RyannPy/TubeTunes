@@ -1,7 +1,18 @@
-.venv/
+# Python
 __pycache__/
 *.pyc
-data/playlists.json
-dist/
+
+# Virtual Environment
+.venv/
+
+# Build
 build/
+dist/
 *.egg-info/
+
+# Local Data
+data/playlists.json
+
+# IDE
+.vscode/
+.idea/
