@@ -21,6 +21,48 @@ def list_aliases() -> dict:
     return load_all()
 
 
+def delete_alias(alias: str) -> None:
+    """Remove a playlist alias from storage.
+
+    Raises KeyError if the alias does not exist.
+    """
+    playlists = load_all()
+    if alias not in playlists:
+        raise KeyError(f"Alias not found: '{alias}'")
+    del playlists[alias]
+    save_all(playlists)
+
+
+def rename_alias(old_alias: str, new_alias: str) -> None:
+    """Rename an existing alias to a new name, preserving its URL.
+
+    Raises KeyError  if old_alias does not exist.
+    Raises ValueError if new_alias is empty, whitespace-only, or already taken.
+    """
+    new_alias = new_alias.strip()
+
+    if not new_alias:
+        raise ValueError("New alias cannot be empty.")
+
+    playlists = load_all()
+
+    if old_alias not in playlists:
+        raise KeyError(f"Alias not found: '{old_alias}'")
+
+    if new_alias in playlists:
+        raise ValueError(f"Alias already exists: '{new_alias}'")
+
+    # Preserve insertion order: rebuild dict with the key renamed in-place
+    updated = {}
+    for key, value in playlists.items():
+        if key == old_alias:
+            updated[new_alias] = value
+        else:
+            updated[key] = value
+
+    save_all(updated)
+
+
 def resolve_playlist_url(input_str: str):
     """Resolve a raw user input to a playlist URL.
 

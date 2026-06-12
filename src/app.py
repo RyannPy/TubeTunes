@@ -6,6 +6,13 @@ from src.utils.console import console
 
 
 def main():
+    try:
+        _run()
+    except KeyboardInterrupt:
+        console.print("\n[yellow]Exiting TubeTunes. Goodbye![/yellow]")
+
+
+def _run():
     args = parse_args()
 
     if args.command == "save":
@@ -21,7 +28,7 @@ def main():
     playlist_url = resolve_playlist_url(args.playlist_url)
 
     if playlist_url is None:
-        console.print("[red]Playlist alias not found[/red]")
+        console.print(f"[red]Alias not found:[/red] '{args.playlist_url}'")
         return
 
     play_playlist(playlist_url, shuffle=args.shuffle)
