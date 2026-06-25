@@ -273,7 +273,11 @@ def _run_controller(queue: QueueManager, player: Player) -> None:
         while queue.has_next():
             try:
                 # update discord
-                update_song(queue.current_title())
+                update_song(
+                    queue.current_title(),
+                    paused=False,
+                )
+
                 # play
                 player.play(queue.current_url())
             except PlaybackError as e:
@@ -353,6 +357,12 @@ def _poll_until_done(
         # ── Pause / Resume ─────────────────────────────────────────────
         elif cmd == _CMD_PAUSE:
             now_paused = player.toggle_pause()
+            # update discord
+            update_song(
+                queue.current_title(),
+                paused=now_paused,
+            )
+            
             status_msg = "Paused" if now_paused else "Resumed"
             msg_clear_at = time.monotonic() + 1.5
 

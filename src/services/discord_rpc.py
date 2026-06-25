@@ -18,7 +18,7 @@ def connect():
         return False
 
 
-def update_song(title: str):
+def update_song(title: str, paused: bool = False):
     if _rpc is None:
         return
 
@@ -28,10 +28,11 @@ def update_song(title: str):
     try:
         _rpc.update(
             details=title,
-            state="Listening with TubeTunes",
+            state="Paused" if paused else "Listening with TubeTunes",
             large_image="tubetunes",
             large_text="TubeTunes",
-            start=int(time.time())
+            small_image="pause" if paused else "play",
+            small_text="Paused" if paused else "Playing",
         )
     except Exception:
         pass
