@@ -1,5 +1,5 @@
 from pypresence import Presence
-
+import time
 
 APP_ID = "1519532503055208458"
 
@@ -7,23 +7,18 @@ _rpc = None
 
 
 def connect():
-    """Connect to Discord Rich Presence."""
     global _rpc
 
     try:
         _rpc = Presence(APP_ID)
         _rpc.connect()
         return True
-    
-    except Exception as e:
-        print("Discord RPC Error:", repr(e))
-
-    _rpc = None
-    return False
+    except Exception:
+        _rpc = None
+        return False
 
 
 def update_song(title: str):
-    """Update currently playing song."""
     if _rpc is None:
         return
 
@@ -34,13 +29,15 @@ def update_song(title: str):
         _rpc.update(
             details=title,
             state="Listening with TubeTunes",
+            large_image="tubetunes",
+            large_text="TubeTunes",
+            start=int(time.time())
         )
     except Exception:
         pass
 
 
 def close():
-    """Close Discord RPC connection."""
     global _rpc
 
     if _rpc is None:

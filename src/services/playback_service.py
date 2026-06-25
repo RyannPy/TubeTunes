@@ -26,6 +26,11 @@ from src.core.queue_manager import QueueManager
 from src.core.player import Player, PlaybackError
 from src.utils.console import console
 
+from src.services.discord_rpc import (
+    connect,
+    update_song,
+    close,
+)
 # ---------------------------------------------------------------------------
 # Platform-aware single-character input
 # ---------------------------------------------------------------------------
@@ -231,6 +236,9 @@ def play_playlist(playlist_url: str, shuffle: bool = False) -> None:
     queue  = QueueManager(entries, shuffle=shuffle)
     player = Player()
 
+    # connect to discord
+    connect()
+
     mode_label = "[magenta]Shuffle[/magenta]" if shuffle else "[white]Normal[/white]"
     console.print(f"[dim]Playback mode:[/dim] {mode_label}\n")
 
@@ -241,6 +249,9 @@ def play_playlist(playlist_url: str, shuffle: bool = False) -> None:
         console.print("\n[yellow]Stopping playback...[/yellow]")
         player.stop()
     finally:
+        # disconnect from discord
+        close()
+        # stop
         _stop_input_thread()
 
 
@@ -261,6 +272,9 @@ def _run_controller(queue: QueueManager, player: Player) -> None:
     ) as live:
         while queue.has_next():
             try:
+                # update discord
+                update_song(queue.current_title())
+                # play
                 player.play(queue.current_url())
             except PlaybackError as e:
                 console.print(f"[red]Playback error:[/red] {e}")
