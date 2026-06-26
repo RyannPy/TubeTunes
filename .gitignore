@@ -1,18 +1,61 @@
-# Python
+# ─── Python ───────────────────────────────────────────────
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
 
-# Virtual Environment
+# ─── Virtual Environments ─────────────────────────────────
 .venv/
+venv/
+env/
+ENV/
 
-# Build
+# ─── Build & Distribution ─────────────────────────────────
 build/
 dist/
 *.egg-info/
+*.egg
+*.whl
+*.tar.gz
+MANIFEST
 
-# Local Data
+# ─── PyInstaller ──────────────────────────────────────────
+*.spec
+# (keep TubeTunes.spec in repo if you want to share build config)
+# *.spec
+
+# ─── Package Managers ─────────────────────────────────────
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ─── Local / User Data ────────────────────────────────────
 data/playlists.json
 
-# IDE
+# ─── Testing & Coverage ───────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# ─── Type Checking ────────────────────────────────────────
+.mypy_cache/
+.dmypy.json
+
+# ─── IDE & Editors ────────────────────────────────────────
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
+
+# ─── OS Files ─────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─── Logs ─────────────────────────────────────────────────
+*.log
+
+# ─── Assets (KEEP – logo & icon needed in repo) ───────────
+# assets/ is intentionally NOT ignored

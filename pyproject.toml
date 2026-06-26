@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tubetunes"
-version = "1.0.0"
+version = "1.1.0"
 description = "CLI YouTube Playlist Audio Player"
 authors = [
     {name = "Ryan"}

@@ -3,10 +3,18 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <h1 align="center">🎵 TubeTunes</h1>
+  <img src="assets/tubetunes-logo-1024.png" alt="TubeTunes Logo" width="120" />
+  <h1 align="center">TubeTunes</h1>
 
   <p align="center">
     A powerful CLI YouTube playlist audio player for your terminal
+    <br />
+    <br />
+    <a href="https://github.com/RyannPy/TubeTunes/releases/latest"><img src="https://img.shields.io/github/v/release/RyannPy/TubeTunes?style=for-the-badge&color=brightgreen" alt="Latest Release" /></a>
+    &nbsp;
+    <a href="https://github.com/RyannPy/TubeTunes/releases/latest"><img src="https://img.shields.io/badge/platform-Windows-blue?style=for-the-badge&logo=windows" alt="Platform" /></a>
+    &nbsp;
+    <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-orange?style=for-the-badge" alt="License" /></a>
     <br />
     <br />
     <a href="#getting-started"><strong>Get Started »</strong></a>
@@ -31,6 +39,7 @@
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
+        <li><a href="#windows-installer-exe">Windows Installer (.exe)</a></li>
       </ul>
     </li>
     <li>
@@ -115,13 +124,26 @@ TubeTunes requires the following to be installed on your system:
 
 ### Installation
 
-#### Method 1: Install from GitHub Release (Recommended)
+#### Method 1: Windows Installer (.exe) — Easiest ⭐
+
+> **No Python required!** Just download and run.
+
+1. Go to the [Releases](https://github.com/RyannPy/TubeTunes/releases/latest) page
+2. Download **`TubeTunes-v1.1.0-Setup.exe`** (Windows only)
+3. Run the installer — TubeTunes will be ready to use from your terminal:
+   ```sh
+   tubetunes
+   ```
+
+> **Note:** mpv must still be installed and available in PATH. See [Prerequisites](#prerequisites).
+
+#### Method 2: Install from GitHub Release (Python)
 
 1. Download the latest `.whl` file from the [Releases](https://github.com/RyannPy/TubeTunes/releases) page
 
 2. Install the package:
    ```sh
-   pip install tubetunes-1.0.0-py3-none-any.whl
+   pip install tubetunes-1.1.0-py3-none-any.whl
    ```
 
 3. Verify installation:
@@ -129,7 +151,7 @@ TubeTunes requires the following to be installed on your system:
    tubetunes
    ```
 
-#### Method 2: Install from Source
+#### Method 3: Install from Source
 
 1. Clone the repository:
    ```sh
@@ -293,6 +315,11 @@ tubetunes/
 - [x] Shuffle mode
 - [x] mpv IPC integration
 - [x] Rich terminal UI
+
+### v1.1.0 — GitHub Presence Update 🚀
+- [x] Windows standalone installer (`.exe`) — no Python needed
+- [x] Project logo & badges on README
+- [x] Official GitHub release page
 
 ### Future Enhancements (v2.0+)
 - [ ] Volume control
