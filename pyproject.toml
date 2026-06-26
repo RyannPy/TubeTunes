@@ -17,6 +17,7 @@ dependencies = [
     "rich",
     "questionary",
     "psutil",
+    "pypresence"
 ]
 
 
