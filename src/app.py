@@ -31,7 +31,11 @@ def _run():
         console.print(f"[red]Alias not found:[/red] '{args.playlist_url}'")
         return
 
-    play_playlist(playlist_url, shuffle=args.shuffle)
+    play_playlist(
+        playlist_url,
+        playlist_alias=args.playlist_url,
+        shuffle=args.shuffle,
+    )
 
 
 if __name__ == "__main__":

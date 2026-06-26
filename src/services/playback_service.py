@@ -220,7 +220,11 @@ def _build_playback_panel(
 # Public entry point
 # ---------------------------------------------------------------------------
 
-def play_playlist(playlist_url: str, shuffle: bool = False) -> None:
+def play_playlist(
+    playlist_url: str,
+    playlist_alias: str | None = None,
+    shuffle: bool = False,
+) -> None:
     """Full playback workflow: load → queue → controller loop."""
     try:
         playlist = load_playlist(playlist_url)
@@ -244,7 +248,11 @@ def play_playlist(playlist_url: str, shuffle: bool = False) -> None:
 
     _start_input_thread()
     try:
-        _run_controller(queue, player)
+        _run_controller(
+            queue,
+            player,
+            playlist_alias,
+        )
     except KeyboardInterrupt:
         console.print("\n[yellow]Stopping playback...[/yellow]")
         player.stop()
@@ -259,7 +267,11 @@ def play_playlist(playlist_url: str, shuffle: bool = False) -> None:
 # Controller loop
 # ---------------------------------------------------------------------------
 
-def _run_controller(queue: QueueManager, player: Player) -> None:
+def _run_controller(
+    queue: QueueManager,
+    player: Player,
+    playlist_alias: str | None,
+) -> None:
     """Drive the queue-player loop with Rich Live UI."""
     # Live context persists across songs so the panel updates in place
     live_console = Console()
@@ -276,6 +288,7 @@ def _run_controller(queue: QueueManager, player: Player) -> None:
                 update_song(
                     queue.current_title(),
                     paused=False,
+                    playlist=playlist_alias,
                 )
 
                 # play

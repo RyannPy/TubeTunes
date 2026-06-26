@@ -162,7 +162,12 @@ def _handle_play_playlist() -> None:
         return
 
     playlist_url = playlists[alias]
-    play_playlist(playlist_url, shuffle=shuffle)
+
+    play_playlist(
+        playlist_url,
+        playlist_alias=alias,
+        shuffle=shuffle,
+    )
 
 
 def _handle_rename_playlist() -> None:

@@ -18,17 +18,26 @@ def connect():
         return False
 
 
-def update_song(title: str, paused: bool = False):
+def update_song(
+    title: str,
+    paused: bool = False,
+    playlist: str | None = None,
+):
     if _rpc is None:
         return
 
     if len(title) > 50:
         title = title[:47] + "..."
 
+    if paused:
+        state = f"⏸ Playlist: {playlist}" if playlist else "Paused"
+    else:
+        state = f"▷ Playlist: {playlist}" if playlist else "Listening Youtube with TubeTunes"
+
     try:
         _rpc.update(
             details=title,
-            state="Paused" if paused else "Listening with TubeTunes",
+            state=state,
             large_image="tubetunes",
             large_text="TubeTunes",
             small_image="pause" if paused else "play",
